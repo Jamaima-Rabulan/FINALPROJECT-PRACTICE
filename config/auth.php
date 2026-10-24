@@ -16,7 +16,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+    // Every request is authenticated with the JWT guard by default
+        'guard' => 'api',
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -42,8 +43,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // Our API guard: reads the Bearer token and loads the user it belongs to
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
     ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | User Providers
