@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Product;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Create 10 fake users
+        $users = User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Create 100 fake products and spread them across those 10 users
+        Product::factory(100)
+        ->recycle($users)
+        ->create();
     }
 }
